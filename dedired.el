@@ -4,8 +4,8 @@
 
 ;; Author: Ran Wang
 ;; Maintainer: Ran Wang
-;; URL: 
-;; Mailing-List: 
+;; URL:
+;; Mailing-List:
 ;; Version: 0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0
 ;; Package-Requires: ((emacs "28.1"))
 
@@ -27,7 +27,7 @@
 ;;; Commentary:
 ;;
 ;; Dedired aims to be a simple-to-use, focused-in-scope, and effective
-;; directory tool for Emacs. 
+;; directory tool for Emacs.
 
 
 (defvar denote-excluded-punctuation-extra-regexp nil
@@ -470,7 +470,7 @@ If PATH has no such keywords, return nil."
          ('keywords (aset args 1 (denote-keywords-prompt)))
          ;;  ('file-type (aset args 2 (denote-file-type-prompt)))
          ;;  ('subdirectory (aset args 3 (denote-subdirectory-prompt)))
-         
+
          ('date (aset args 4 (denote-date-prompt)))
          ;;  ('template (aset args 5 (denote-template-prompt)))
          ))
@@ -492,3 +492,5 @@ If PATH has no such keywords, return nil."
     (denote--prepare-directory title kws id directory)
     ;;  (denote--keywords-add-to-history keywords)
     ))
+
+(provide 'dedired)
