@@ -485,12 +485,10 @@ If PATH has no such keywords, return nil."
                    (current-time)
                  (denote--valid-date date)))
          (id (format-time-string denote-id-format date))
-         (directory (if (denote--dir-in-denote-directory-p subdirectory)
-                        (file-name-as-directory subdirectory)
+         (directory (if current-prefix-arg
+                        (expand-file-name dired-directory)
                       (denote-directory))))
-    ;;  (message "%s %s %s %s" title kws id directory)
-    (denote--prepare-directory title kws id directory)
-    ;;  (denote--keywords-add-to-history keywords)
-    ))
+
+    (denote--prepare-directory title kws id directory)))
 
 (provide 'dedired)
