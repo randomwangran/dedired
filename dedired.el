@@ -457,6 +457,38 @@ If PATH has no such keywords, return nil."
     (when kws
       (split-string kws "_"))))
 
+(defun dedired-just-as-string (&optional title keywords file-type subdirectory date template)
+  "Send folder name as string to kill-ring."
+  (interactive
+   (let ((args (make-vector 6 nil)))
+     (dolist (prompt denote-prompts)
+       (pcase prompt
+         ('title (aset args 0 (denote-title-prompt
+                               (when (use-region-p)
+                                 (buffer-substring-no-properties
+                                  (region-beginning)
+                                  (region-end))))))
+         ('keywords (aset args 1 (denote-keywords-prompt)))
+         ('date (aset args 4 (denote-date-prompt)))
+         ))
+     (append args nil)))
+
+  (let* ((title (or title ""))
+         (kws (if (called-interactively-p 'interactive)
+                  keywords
+                (denote-keywords-sort keywords)))
+         (date (if (or (null date) (string-empty-p date))
+                   (current-time)
+                 (denote--valid-date date)))
+         (id (format-time-string denote-id-format date))
+         (directory (if current-prefix-arg
+                        (expand-file-name dired-directory)
+                      (denote-directory))))
+
+    (with-temp-buffer
+      (insert (denote--path title kws id ""))
+      (clipboard-kill-region (point-min) (point-max)))))
+
 (defun dedired (&optional title keywords file-type subdirectory date template)
   (interactive
    (let ((args (make-vector 6 nil)))
